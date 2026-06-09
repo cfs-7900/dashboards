@@ -44,13 +44,3 @@ Potential additions:
 - Monthly Operations Reporting
 
 ---
-
-# Ownership
-
-Repository Owner:
-
-CFS-7900
-
-Purpose:
-
-Provide a centralized dashboard platform for operational reporting, asset management, project tracking, and facilities analytics.
