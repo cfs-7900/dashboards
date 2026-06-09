@@ -22,7 +22,7 @@ This repository is intended to:
 
 | Dashboard | Status | URL |
 |------------|---------|---------|
-| HVAC Asset Costs 2026 | Active | https://cfs-7900.github.io/dashboards/dashboard-hvac-asset-costs-2026.html |
+| HVAC Asset Costs 2026 | Active | https://cfs-7900.github.io/dashboards/dashboard-hvac-asset-costs-2026-v3.html |
 | Fitness Center | Active | https://cfs-7900.github.io/dashboards/fcwaivers.html |
 | Energy Consumption | Active | https://cfs-7900.github.io/dashboards/utilities2026.html |
 
