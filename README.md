@@ -16,14 +16,6 @@ This repository is intended to:
 - Publish dashboards through GitHub Pages
 - Create a centralized dashboard library
 
-All dashboards should be:
-
-- Self-contained HTML files
-- No server required
-- No database required
-- Mobile-friendly when possible
-- Easy to share with stakeholders
-
 ---
 
 # Dashboard Inventory
