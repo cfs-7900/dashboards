@@ -22,6 +22,7 @@ This repository is intended to:
 
 | Dashboard | Status |
 |------------|---------|
+| [AI Readiness Assessment Prototype](https://jkiventuresai.github.io/dashboards/ai-readiness-assessment-v2.html) | Active
 | [HVAC Asset Costs 2026](https://cfs-7900.github.io/dashboards/dashboard-hvac-asset-costs-2026-v3.html) | Active
 | [Asset Costs](https://cfs-7900.github.io/dashboards/asset-costs-v1.html) | Active |
 | [Fitness Center](https://cfs-7900.github.io/dashboards/fcwaivers.html) | Active |
