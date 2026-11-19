@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#09101f" />
+  <title>AI Knowledge Assessment</title>
+  <link rel="stylesheet" href="ai-readiness-assessment-v2.css" />
+</head>
+<body>
+<main class="shell">
+  <section class="hero">
+    <div class="eyebrow">AI Knowledge Assessment</div>
+    <h1><span class="gradient">AI Knowledge Assessment</span></h1>
+    <p class="lead">An employee assessment of current AI awareness, usage, and confidence levels. Assessment results will be used to gauge employees’ current understanding of the AI landscape and help the company determine the training offered and the AI tools we adopt.</p>
+    <div class="meta"><span>Estimated time: 6–8 minutes</span><span>Mobile friendly</span><span>Named responses</span><span>Prototype: no data is transmitted</span></div>
+  </section>
+
+  <section class="panel">
+    <section id="startScreen" class="screen active">
+      <div class="intro-grid">
+        <div class="intro-card"><b>Why this exists</b><p>To establish a company-wide baseline and tailor future AI discussions, support, and training to real employee needs.</p></div>
+        <div class="intro-card"><b>What this is not</b><p>It is not a performance review, technical exam, or attempt to expose who has been asking ChatGPT to rewrite “per my last email.”</p></div>
+        <div class="intro-card"><b>Answer honestly</b><p>Low usage is useful information. High usage is useful information. Pretending to know what an API is helps no one.</p></div>
+        <div class="intro-card"><b>Prototype behavior</b><p>Your answers remain in this browser. At completion, a CSV row can be downloaded for testing the future reporting structure.</p></div>
+      </div>
+      <div class="notice"><strong>Privacy note:</strong> Do not enter confidential client, employee, financial, contract, or system information anywhere in this prototype.</div>
+      <div class="field-grid">
+        <div class="field"><label for="name">Full name *</label><input id="name" autocomplete="name" placeholder="Your name"></div>
+        <div class="field"><label for="title">Job title *</label><input id="title" placeholder="Example: Account Manager"></div>
+        <div class="field"><label for="department">Team / department *</label>
+          <select id="department">
+            <option value="">Select one</option>
+            <option>Senior Leadership</option><option>Corporate / Administration</option><option>Accounting / Finance</option>
+            <option>Human Resources</option><option>Business Development / Marketing</option><option>Operations Leadership</option>
+            <option>Account / Property Management</option><option>Engineering / Maintenance</option><option>Technology / Systems</option><option>Other</option>
+          </select>
+        </div>
+        <div class="field"><label for="workstyle">Primary work setup *</label>
+          <select id="workstyle"><option value="">Select one</option><option>Mostly office / computer</option><option>Hybrid office and field</option><option>Mostly field / mobile device</option><option>Leadership / frequent travel</option><option>Other</option></select>
+        </div>
+      </div>
+      <div class="actions"><span></span><button class="btn primary" onclick="startAssessment()">Begin assessment</button></div>
+    </section>
+
+    <section id="quizScreen" class="screen">
+      <div class="topbar">
+        <div class="topline"><span id="sectionText"></span><span id="countText"></span></div>
+        <div class="progress-track"><div class="progress" id="progress"></div></div>
+      </div>
+      <div class="section-label" id="categoryLabel"></div>
+      <h2 class="question" id="questionText"></h2>
+      <p class="helper" id="questionHelper"></p>
+      <div class="answers" id="answers"></div>
+      <div class="actions">
+        <button class="btn ghost" id="backBtn" onclick="goBack()">← Back</button>
+        <button class="btn primary" id="nextBtn" onclick="goNext()" disabled>Next →</button>
+      </div>
+      <p class="tiny">The assessment measures current state—not potential, intelligence, or whether your prompts contain the word “please.”</p>
+    </section>
+
+    <section id="commentsScreen" class="screen">
+      <div class="section-label">Final input</div>
+      <h2 class="question">What should the company know before planning AI support and training?</h2>
+      <p class="helper">These final questions are optional, but often provide the most actionable information.</p>
+      <div class="field-grid">
+        <div class="field full"><label for="useCase">What repetitive task or processes are part of your job that you feel wastes a lot of your time?</label><textarea id="useCase" placeholder="Example: summarize inspection notes, reduce duplicate data entry, draft tenant updates..."></textarea></div>
+        <div class="field full"><label for="concern">What is your biggest concern or hesitation about using AI at work?</label><textarea id="concern" placeholder="Example: accuracy, confidentiality, job impact, not knowing where to start..."></textarea></div>
+        <div class="field full"><label for="support">What training or support would be most useful?</label><textarea id="support" placeholder="Example: short team demo, one-on-one help, role-specific examples, written guide..."></textarea></div>
+      </div>
+      <div class="actions"><button class="btn ghost" onclick="returnToLast()">← Back</button><button class="btn primary" onclick="finishAssessment()">View results</button></div>
+    </section>
+
+    <section id="resultScreen" class="screen">
+      <div class="result-head">
+        <div class="score-ring" id="scoreRing"><div class="score" id="scoreValue">0%</div></div>
+        <h2 class="result-title" id="resultTitle"></h2>
+        <p class="result-copy" id="resultCopy"></p>
+      </div>
+      <div class="dashboard" id="categoryMetrics"></div>
+      <div class="callout" id="trainingCallout"></div>
+      <div class="summary-wrap">
+        <table class="summary-table">
+          <thead><tr><th>Respondent</th><th>Role</th><th>Team</th><th>Overall</th><th>Level</th><th>Suggested training</th></tr></thead>
+          <tbody id="summaryRow"></tbody>
+        </table>
+      </div>
+      <div class="actions">
+        <button class="btn secondary" onclick="restart()">Retake</button>
+        <button class="btn primary" onclick="downloadCSV()">Download prototype CSV</button>
+      </div>
+      <p class="prototype"><strong>Prototype limitation:</strong> This page does not submit or aggregate responses. The CSV button demonstrates the proposed table structure for a later backend, dashboard, or Microsoft 365 workflow.</p>
+    </section>
+  </section>
+</main>
+
+<script src="ai-readiness-assessment-v2.js"></script>
+<script>
+  questions.forEach((question) => {
+    if (question.category === "Rabbit Hole") question.category = "Advanced Usage";
+  });
+
+  levelFor = function(score) {
+    if (score < 25) return {
+      title: "AI Newcomer",
+      copy: "You are at the beginning of your AI learning journey. The best next step is a plain-language introduction focused on safe, immediately useful tasks—not technical jargon.",
+      training: "Foundations + guided examples"
+    };
+    if (score < 50) return {
+      title: "Practical Beginner",
+      copy: "You have some awareness or basic usage, but your process is still inconsistent. Role-specific examples and simple verification habits should create quick value.",
+      training: "Role-based basics + safe use"
+    };
+    if (score < 70) return {
+      title: "Capable User",
+      copy: "You use AI productively and understand several important concepts. The next gain comes from repeatable methods, stronger verification, and workflow-level thinking.",
+      training: "Intermediate workflows + verification"
+    };
+    if (score < 86) return {
+      title: "Advanced Practitioner",
+      copy: "You are well beyond casual chatbot use. You may be able to support pilots, identify use cases, help peers, or contribute to standards and implementation.",
+      training: "Advanced automation + champion track"
+    };
+    return {
+      title: "AI Program Leader",
+      copy: "You are operating at an unusually advanced level. You may be well suited to support pilots, governance design, integrations, advanced workflows, and peer development.",
+      training: "Technical labs + program leadership"
+    };
+  };
+</script>
+</body>
+</html>
