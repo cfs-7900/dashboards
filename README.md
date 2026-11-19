@@ -8,7 +8,7 @@ This repository serves as the  hosting location for self-contained HTML projects
 | Dashboard | Description | Status |
 |------------|---------|---------|
 | [Master Dashboard](https://cfs-7900.github.io/dashboards/index.html) |  Summary of operations for faciltiies | Active
-| [KPI Dashboard](https://cfs-7900.github.io/dashboards-monthly/kpi.html) |  KPI results | Active
+| [AI Readiness Assessment](https://cfs-7900.github.io/dashboards/ai-readiness-assessment-v2.html) |  KPI results | Active
 
 
 ---
